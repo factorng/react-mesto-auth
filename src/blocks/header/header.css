@@ -1,0 +1,21 @@
+@import url(./__logo/header__logo.css);
+@import url(./__account/header__account.css);
+@import url(./__link/header__link.css);
+@import url(./__button/header__button.css);
+
+.header {
+  height: 74px;
+  margin: 0 auto;
+  padding: 45px 0 36px 0;
+  border-bottom: 1px solid #545454;
+  max-width: 882px;
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (max-width: 486px) {
+  .header {
+    height: 70px;
+    margin: 10px auto 36px auto;
+    border-bottom: 1px solid #545454;
+  }
+}
