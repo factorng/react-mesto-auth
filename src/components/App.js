@@ -43,30 +43,28 @@ function App() {
   const [userData, setUserData] = React.useState(null);
   const history = useHistory();
 
-  const tokenCheck = useCallback(
-    () => {
-      const jwt = localStorage.getItem('jwt');
-      if (jwt) {
-        auth.getContent(jwt)
-          .then((res) => {
-            if (res) {
-              setUserData({
-                id: res.data._id,
-                email: res.data.email,
-              });
-              setLoggedIn(true);
-              history.push('/');
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            setLoggedIn(false);
-            setIsInfoTooltipOpen(true);
-            history.push('/signin');
-          });
-      }
-    }, [history],
-  );
+  const tokenCheck = useCallback(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.getContent(jwt)
+        .then((res) => {
+          if (res) {
+            setUserData({
+              id: res.data._id,
+              email: res.data.email,
+            });
+            setLoggedIn(true);
+            history.push('/');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoggedIn(false);
+          setIsInfoTooltipOpen(true);
+          history.push('/signin');
+        });
+    }
+  }, [history]);
 
   React.useEffect(() => {
     tokenCheck();
@@ -86,12 +84,14 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
       // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-      const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
-      // Обновляем стейт
-      setCards(newCards);
-    });
+        const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+        // Обновляем стейт
+        setCards(newCards);
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleEditAvatarClick() {

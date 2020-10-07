@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 
 function Login({
-  isOpen, onSubmit,
+  onSubmit,
 }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -14,9 +14,11 @@ function Login({
       return;
     }
     onSubmit(email, password);
+  }
+  useEffect(() => {
     setEmail('');
     setPassword('');
-  }
+  }, []);
 
   return (
     <div className='login-popup popup_open'>

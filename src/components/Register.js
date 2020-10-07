@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react'; import { Link } from 'react-router-dom';
 import Header from './Header';
 
 function Register({
@@ -11,8 +10,11 @@ function Register({
   function handleSubmit(e) {
     e.preventDefault();
     onSubmit(email, password);
-    console.log(email, password);
   }
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+  }, []);
 
   return (
     <div className='login-popup popup_open'>
